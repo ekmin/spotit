@@ -1,7 +1,33 @@
+"use client"
+
 import React from "react";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  function AuthButton() {
+    const { data: session } = useSession();
+
+    if (session) {
+      return (
+        <button
+          className="bg-primary-color hover:bg-primary-dark-color hover:rotate-12 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </button>
+      );
+    }
+    return (
+      <button
+      className="bg-primary-color hover:bg-primary-dark-color hover:rotate-12 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+      onClick={() => signIn()}
+    >
+      Sign In
+    </button>
+    );
+  }
+
   return (
     <nav className="flex items-center justify-between flex-wrap bg-secondary-color p-4">
       <Link
@@ -10,9 +36,7 @@ const Navbar = () => {
       >
         SPOTIT
       </Link>
-      <button className="bg-primary-color hover:bg-primary-dark-color hover:rotate-12 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8">
-        Sign Up
-      </button>
+      <AuthButton />
     </nav>
   );
 };
