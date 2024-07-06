@@ -1,4 +1,5 @@
-import { MdTimer, MdWeb, MdCompare } from "react-icons/md"
+import Link from "next/link";
+import { MdTimer, MdWeb, MdCompare } from "react-icons/md";
 
 export default function Home() {
   const whyData = [
@@ -58,9 +59,11 @@ export default function Home() {
 
         <div className="group relative mt-12">
           <div className="absolute inset-0 scale-x-105 animate-pulse bg-gradient-to-r from-[#7880e7] to-[#2a3192] blur-2xl transition-transform group-hover:scale-x-125" />
-          <button className="relative z-10 rounded-md bg-black py-[0.85rem] px-10 text-2xl text-white transition-transform group-hover:scale-110">
-            SPOT IT 🎯
-          </button>
+          <Link href="/products">
+            <button className="relative z-10 rounded-md bg-black py-[0.85rem] px-10 text-2xl text-white transition-transform group-hover:scale-110">
+              SPOT IT 🎯
+            </button>
+          </Link>
         </div>
       </section>
       <section className="mx-auto flex max-w-7xl flex-col items-center px-4 py-24 md:pt-36">
