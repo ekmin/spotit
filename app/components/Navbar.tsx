@@ -29,7 +29,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-secondary-color p-4">
+    <nav className="flex items-center justify-between flex-wrap bg-secondary-color p-4 mb-8">
       <Link
         href="/"
         className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary-color to-violet-500  transition duration-300 ease-in-out hover:scale-110"
