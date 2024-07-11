@@ -10,7 +10,7 @@ export default async function products() {
   }
 
   return (
-    <div className="w-full max-w-xl mt-8 mx-auto">
+    <div>
       <ProductForm />
     </div>
   );
