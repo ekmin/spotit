@@ -12,16 +12,16 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
-  if(session) {
-    const data = await req.json();
+  if (session) {
+    const body = await req.json();
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `Answer the following prompt in this JSON format.[{special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Here the special tag is a keyword use to compare each device from each other, such as 'best all rounder', 'best camera phone', 'best value'. Given are some requirements needed by a user from a product, provide 4 products that matches the user requirement. Product type: ${data["productType"]}, Requirements: ${data["requirements"]} Other Cases: ${data["otherCases"]} currency: ${data["currency"]}`
+    const prompt = `Answer the following prompt in this JSON format.[your opinion, {special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Give below is a product selected by the user and you have to give your opinion about the users choice and suggest 4 other products which are better than that in the same price range. Product: ${body["product"]}`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
     const ftext = JSON.parse(text.replace(/`/g, "").split("json")[1]);
-  
+
     return NextResponse.json(ftext);
   }
   return NextResponse.json("Not Logged in");
