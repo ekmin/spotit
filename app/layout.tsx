@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
+import ToastProvider from "./ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,13 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <div className="flex-grow h-full flex flex-col">{children}</div>
-            <Footer />
-          </div>
+          <ToastProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <div className="flex-grow h-full flex flex-col">{children}</div>
+              <Footer />
+            </div>
+          </ToastProvider>
         </SessionProvider>
       </body>
     </html>
