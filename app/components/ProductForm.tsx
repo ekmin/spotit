@@ -3,8 +3,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { MdSouth, MdNorth, MdCancel } from "react-icons/md";
+import exportFromJSON from "export-from-json";
 import currenciesData from "../../public/currencies.json";
 import ItemList from "./ItemList";
+import Spinner from "./Spinner";
 
 interface Currency {
   symbol: string;
@@ -38,26 +40,25 @@ const ProductForm = () => {
     name: "Requirements",
     icon: <MdNorth />,
   });
-  const onClickShow = () =>
-    setShowForm((prevState) => ({
-      show: !prevState.show,
-      name: prevState.show ? "Requirements" : "Requirements",
-      icon: prevState.show ? <MdSouth /> : <MdNorth />,
-    }));
-
-  const currencies: Currency[] = Object.values(currenciesData.currencies[0]);
-
   const [requirement, setRequirement] = useState("");
   const [requirementsArray, setRequirementsArray] = useState<string[]>([]);
-
   const [requirements, setRequirements] = useState<IRequirements>({
     productType: "",
     requirements: requirementsArray,
     otherCases: "",
     currency: "",
   });
-
   const [responseData, setResponseData] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const currencies: Currency[] = Object.values(currenciesData.currencies[0]);
+
+  const onClickShow = () =>
+    setShowForm((prevState) => ({
+      show: !prevState.show,
+      name: prevState.show ? "Requirements" : "Requirements",
+      icon: prevState.show ? <MdSouth /> : <MdNorth />,
+    }));
 
   const onChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -80,6 +81,8 @@ const ProductForm = () => {
       }));
       return updatedRequirementsArray;
     });
+
+    setRequirement(" ");
   };
 
   const onClickDelete = (index: number) => {
@@ -97,15 +100,18 @@ const ProductForm = () => {
     e.preventDefault();
 
     try {
+      setLoading(true)
       const response = await axios.post("/api/products", requirements);
+      setLoading(false)
       setResponseData(response.data);
       setShowForm({
         show: false,
         name: "Requirements",
-        icon: <MdSouth />
+        icon: <MdSouth />,
       });
     } catch (error) {
       console.error("Error submitting form", error);
+      setLoading(false)
     }
   };
 
@@ -124,99 +130,110 @@ const ProductForm = () => {
             showForm["show"] ? `opacity-100` : `opacity-0`
           } transition-opacity`}
         >
-          {showForm["show"] && <form
-            className="bg-secondary-color shadow-md rounded px-8 pt-6 pb-8 mb-5"
-            onSubmit={handleSubmit}
-          >
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Product Type
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                placeholder="Smartphone"
-                name="productType"
-                value={requirements.productType}
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Requirements
-              </label>
-              <div className="flex mb-4">
+          {showForm["show"] && (
+            <form
+              className="bg-secondary-color shadow-md rounded px-8 pt-6 pb-8 mb-5"
+              onSubmit={handleSubmit}
+            >
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Product Type
+                </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
-                  placeholder="Something"
-                  name="requirement"
-                  value={requirement}
-                  onChange={onChangeRequirement}
+                  placeholder="Smartphone"
+                  name="productType"
+                  value={requirements.productType}
+                  onChange={onChange}
                 />
-                <button
-                  className="bg-black py-2 px-3 shadow appearance-none border rounded"
-                  onClick={onClickRequirements}
-                >
-                  +
-                </button>
               </div>
-              {requirementsArray.map((requirement, index) => (
-                <div
-                  key={index}
-                  className="bg-white mb-1 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4 flex justify-between"
-                >
-                  <p>{requirement}</p>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Requirements
+                </label>
+                <div className="flex mb-4">
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
+                    type="text"
+                    placeholder="Something"
+                    name="requirement"
+                    value={requirement}
+                    onChange={onChangeRequirement}
+                  />
                   <button
-                    className="text-red-500 text-xl"
-                    onClick={() => onClickDelete(index)}
+                    className="bg-black py-2 px-3 shadow appearance-none border rounded"
+                    onClick={onClickRequirements}
                   >
-                    <MdCancel />
+                    +
                   </button>
                 </div>
-              ))}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Other Special Requirements
-              </label>
-              <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Something"
-                name="otherCases"
-                value={requirements.otherCases}
-                onChange={onChange}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Currency
-              </label>
-              <select
-                name="currency"
-                value={requirements.currency}
-                onChange={onChange}
-                className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option value="">Select a currency</option>
-                {currencies.map((currency) => (
-                  <option key={currency.code} value={currency.code}>
-                    {currency.name} ({currency.code})
-                  </option>
+                {requirementsArray.map((requirement, index) => (
+                  <div
+                    key={index}
+                    className="bg-white mb-1 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4 flex justify-between"
+                  >
+                    <p>{requirement}</p>
+                    <button
+                      className="text-red-500 text-xl"
+                      onClick={() => onClickDelete(index)}
+                    >
+                      <MdCancel />
+                    </button>
+                  </div>
                 ))}
-              </select>
-            </div>
-            <div className="flex flex-col items-end">
-              <button
-                className="bg-primary-color hover:bg-primary-dark-color text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Other Special Requirements
+                </label>
+                <textarea
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Something"
+                  name="otherCases"
+                  value={requirements.otherCases}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Currency
+                </label>
+                <select
+                  name="currency"
+                  value={requirements.currency}
+                  onChange={onChange}
+                  className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">Select a currency</option>
+                  {currencies.map((currency) => (
+                    <option key={currency.code} value={currency.code}>
+                      {currency.name} ({currency.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col items-end">
+                <button
+                  className="bg-primary-color hover:bg-primary-dark-color text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
+      <h1 className="text-3xl font-extrabold tracking-tight text-center capitalize mt-20">
+        Products
+      </h1>
+      {/* {responseData && (
+        <button onClick={() => exportFromJSON({ data, fileName, exportType })}>
+          Download using method
+        </button>
+      )} */}
+      {loading && <Spinner />}
       {responseData && <ItemList items={responseData} />}
     </div>
   );

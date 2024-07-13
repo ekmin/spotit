@@ -2,23 +2,33 @@
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 import ItemList from "../components/ItemList";
+import Spinner from "../components/Spinner";
+import { showToast } from "../components/ToastHelper";
 
 type Product = {
-    "special tag": string;
-    "product title": string;
-    "key features": string[];
-    "short description": string;
-    price: string;
-    "resource links": string[];
-  };
+  "special tag": string;
+  "product title": string;
+  "key features": string[];
+  "short description": string;
+  price: string;
+  "resource links": string[];
+};
 
 const compare = () => {
+  const { data: session } = useSession();
+  if (!session) {
+    redirect("/api/auth/signin");
+  }
+
   const [product, setProduct] = useState({
-    product: " "
+    product: " ",
   });
   const [responseData, setResponseData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -28,19 +38,30 @@ const compare = () => {
     e.preventDefault();
 
     try {
+      setProduct({
+        product: " ",
+      })
+      setLoading(true);
       const response = await axios.post("/api/compare", product);
+      setLoading(false);
       setResponseData(response.data);
-      console.log(response.data);
-      
-    } catch (error) {
-      console.error("Error submitting form", error);
+      showToast("success", "Data retrieved successfuly");
+    } catch (error: any) {
+      setProduct({
+        product: " ",
+      })
+      setLoading(false);
+      showToast("error", error.response.statusText);
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+      <form
+        className="max-w-xl mx-auto bg-secondary-color shadow-md rounded px-8 pt-6 pb-8 mb-5"
+        onSubmit={handleSubmit}
+      >
+        <label className="block text-gray-700 text-md font-bold mb-2">
           Product
         </label>
         <input
@@ -51,20 +72,26 @@ const compare = () => {
           value={product.product}
           onChange={onChange}
         />
-        <button type="submit">Submit</button>
+        <div className="flex flex-col items-end">
+          <button
+            className="bg-primary-color hover:bg-primary-dark-color text-white font-semibold text-sm py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
       </form>
-      <p className="mb-4">{responseData[0]}</p>
-      {responseData && <ItemList items={responseData.filter((_, index) => index > 0)} />}
-      {/* {responseData &&
-        responseData.filter((_, index) => index > 0).map((item, index) => (
-            <div key={index} className="border-b-white mb-4">
-            <h1>{item["special tag"]}: {item["product title"]}</h1>
-            <p>{item["short description"]}</p>
-            <p>{item["key features"]}</p>
-            <p>{item["links"]}</p>
-            <p>{item["price"]}</p>
-          </div>
-        ))} */}
+      <h1 className="text-3xl font-extrabold tracking-tight text-center capitalize mt-10">
+        Gemini's Opinion
+      </h1>
+      <p className="mb-4 text-center max-w-xl m-auto mt-10 border-2 px-8 py-8 rounded-md">{responseData[0]}</p>
+      <h1 className="text-3xl font-extrabold tracking-tight text-center capitalize mt-10">
+        Products
+      </h1>
+      {loading && <Spinner />}
+      {responseData && (
+        <ItemList items={responseData.filter((_, index) => index > 0)} />
+      )}
     </div>
   );
 };
