@@ -1,30 +1,44 @@
-"use client"
+"use client";
 
 import React from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
-  function AuthButton() {
+  function AuthLinks() {
     const { data: session } = useSession();
 
     if (session) {
       return (
-        <button
-          className="bg-primary-color hover:bg-primary-dark-color hover:rotate-12 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
-          onClick={() => signOut()}
-        >
-          Sign Out
-        </button>
+        <div className="flex items-center space-x-5">
+          <Link
+            href="/products"
+            className="text-primary-color font-semibold hover:text-primary-dark-color transition duration-300 ease-in-out hover:scale-110"
+          >
+            Find
+          </Link>
+          <Link
+            href="/compare"
+            className="text-primary-color font-semibold hover:text-primary-dark-color transition duration-300 ease-in-out hover:scale-110"
+          >
+            Compare
+          </Link>
+          <button
+            className="bg-primary-color hover:bg-primary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+            onClick={() => signOut()}
+          >
+            Sign Out
+          </button>
+        </div>
       );
     }
     return (
       <button
-      className="bg-primary-color hover:bg-primary-dark-color hover:rotate-12 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
-      onClick={() => signIn()}
-    >
-      Sign In
-    </button>
+        className="bg-primary-color hover:bg-primary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+        onClick={() => signIn()}
+      >
+        Sign In
+      </button>
     );
   }
 
@@ -36,7 +50,7 @@ const Navbar = () => {
       >
         SPOTIT
       </Link>
-      <AuthButton />
+      <AuthLinks />
     </nav>
   );
 };

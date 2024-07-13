@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `Answer the following prompt in this JSON format.[your opinion, {special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Give below is a product selected by the user and you have to give your opinion about the users choice and suggest 4 other products which are better than that in the same price range. Product: ${body["product"]}`;
+    const prompt = `Answer the following prompt in this JSON format.[your opinion, {special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Give below is a product selected by the user and you have to give your opinion about the users choice and suggest 4 other products which are better than that in the same price range. In the short description you should say why it is better than the product choosed by user and show the difference. Product: ${body["product"]}`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
@@ -26,3 +26,5 @@ export async function POST(req: NextRequest) {
   }
   return NextResponse.json("Not Logged in");
 }
+
+// In the short description you should say why it is better than the product choosed by user and show the dfifference.

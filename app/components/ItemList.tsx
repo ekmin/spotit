@@ -15,11 +15,8 @@ interface itemProps {
 
 const ItemList = ({ items }: itemProps) => {
   return (
-    <div className="relative mt-20">
-      <h1 className="text-3xl font-extrabold tracking-tight text-center underline capitalize decoration-emerald-400">
-        Products
-      </h1>
-      <ul className="mt-10 pb-8 px-[49vw] w-full flex gap-8 snap-x overflow-x-auto self-center">
+    <div className="relative mt-10">
+      <ul className="no-scrollbar pb-8 px-[49vw] w-full flex gap-8 snap-x overflow-x-auto self-center">
         {items.map((item, index) => (
           <li key={index} className="snap-center">
             <div className="relative flex-shrink-0 max-w-[95vw] overflow-hidden rounded-3xl">
@@ -39,7 +36,7 @@ const ItemList = ({ items }: itemProps) => {
                 </h1>
                 <p className="font-md mb-4">{item["short description"]}</p>
                 <h2 className="font-semibold font-lg mb-2">Key Features</h2>
-                <ol>
+                <ol className="list-disc ml-4">
                   {item["key features"].map(
                     (feature: string, index: number) => (
                       <li className="font-md" key={index}>
