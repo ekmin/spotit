@@ -17,7 +17,7 @@ export default function Home() {
     {
       icon: <MdCompare />,
       title: "Compare Products",
-      description: "lorem ipsume some reason here we go.",
+      description: "Find out wether are their any products that are better than your choice",
     },
   ];
 
@@ -42,8 +42,8 @@ export default function Home() {
   };
   return (
     <main>
-      <section className="mx-auto flex max-w-7xl flex-col items-center px-4 pt-24 md:pt-36">
-        <h1 className="text-center text-5xl font-extrabold leading-[60px] bg-clip-text text-transparent bg-gradient-to-t from-secondary-dark-color to-secondary-color md:text-6xl md:leading-[85px] lg:text-7xl">
+      <section className="mx-auto flex max-w-7xl flex-col items-center px-4 pt-20 md:pt-28">
+        <h1 className="text-center text-5xl font-extrabold leading-[60px] bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color md:text-6xl md:leading-[85px] lg:text-7xl">
           Find The Perfect Product That Matches Your Requirements
         </h1>
 
@@ -54,13 +54,13 @@ export default function Home() {
         <p className="mt-12 w-[80%] text-center text-lg capitalize md:text-xl">
           Enter your requirements and find the best products that match with
           them within few minutes by few clicks. If you already have a product
-          make sure is it the best.
+          make sure it is the best.
         </p>
 
-        <div className="group relative mt-12">
-          <div className="absolute inset-0 scale-x-105 animate-pulse bg-gradient-to-r from-[#7880e7] to-[#2a3192] blur-2xl transition-transform group-hover:scale-x-125" />
+        <div className="group relative mt-14">
+          <div className="absolute inset-0 scale-x-105 animate-pulse bg-gradient-to-r from-secondary-color to-secondary-dark-color blur-2xl transition-transform group-hover:scale-x-125" />
           <Link href="/products">
-            <button className="relative z-10 rounded-md bg-black py-[0.85rem] px-10 text-2xl text-white transition-transform group-hover:scale-110">
+            <button className="relative z-10 rounded-md bg-secondary-dark-color py-[0.85rem] px-10 text-2xl text-white transition-transform group-hover:scale-110">
               SPOT IT 🎯
             </button>
           </Link>

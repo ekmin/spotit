@@ -3,25 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --primary-rgb: 236, 236, 236;
-  --primary-dark-rgb: 171, 170, 184;
-  --secondary-rgb: 71, 71, 135;
-  --secondary-dark-rgb: 45, 44, 84
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-rgb: 71, 71, 135;
-    --primary-dark-rgb: 45, 44, 84;
-    --secondary-rgb: 236, 236, 236;
-    --secondary-dark-rgb: 171, 170, 184
-  }
+--primary-rgb: 249, 247, 247;
+--primary-dark-rgb: 219, 226, 239;
+--secondary-rgb: 63, 114, 175;
+--secondary-dark-rgb: 17, 45, 78;
 }
 
 body {
   color: rgb(var(--secondary-rgb));
   background: linear-gradient(
-      to bottom,
+      to top,
       transparent,
       rgb(var(--primary-rgb))
     )

@@ -13,18 +13,24 @@ const Navbar = () => {
         <div className="flex items-center space-x-5">
           <Link
             href="/products"
-            className="text-primary-color font-semibold hover:text-primary-dark-color transition duration-300 ease-in-out hover:scale-110"
+            className="text-secondary-color font-semibold hover:text-secondary-dark-color transition duration-300 ease-in-out hover:scale-110"
           >
             Find
           </Link>
           <Link
             href="/compare"
-            className="text-primary-color font-semibold hover:text-primary-dark-color transition duration-300 ease-in-out hover:scale-110"
+            className="text-secondary-color font-semibold hover:text-secondary-dark-color transition duration-300 ease-in-out hover:scale-110"
           >
             Compare
           </Link>
+          <Link
+            href="/guide"
+            className="text-secondary-color font-semibold hover:text-secondary-dark-color transition duration-300 ease-in-out hover:scale-110"
+          >
+            Guide
+          </Link>
           <button
-            className="bg-primary-color hover:bg-primary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+            className="bg-secondary-color hover:bg-secondary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs text-primary-color w-20 h-8"
             onClick={() => signOut()}
           >
             Sign Out
@@ -34,7 +40,7 @@ const Navbar = () => {
     }
     return (
       <button
-        className="bg-primary-color hover:bg-primary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs w-20 h-8"
+        className="bg-secondary-color hover:bg-secondary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs text-primary-color w-20 h-8"
         onClick={() => signIn()}
       >
         Sign In
@@ -43,10 +49,10 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-secondary-color p-4 mb-8">
+    <nav className="flex items-center justify-between px-4 py-4 mb-8 border-b font-medium shadow-sm 2xl:px-8">
       <Link
         href="/"
-        className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary-color to-violet-500  transition duration-300 ease-in-out hover:scale-110"
+        className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-primary-dark-color  transition duration-300 ease-in-out hover:scale-110"
       >
         SPOTIT
       </Link>
