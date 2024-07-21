@@ -35,23 +35,23 @@ export default function Home() {
         <div className="mb-5 w-min rounded-md bg-gradient-to-br from-secondary-color to-secondary-dark-color p-5 text-5xl text-primary-color">
           {item.icon}
         </div>
-        <h2 className="text-2xl font-semibold">{item.title}</h2>
-        <p className="mt-2 text-lg">{item.description}</p>
+        <h2 className="sm:text-2xl text-xl font-semibold">{item.title}</h2>
+        <p className="mt-2 sm:text-lg text-base">{item.description}</p>
       </div>
     );
   };
   return (
     <main>
-      <section className="mx-auto flex max-w-7xl flex-col items-center px-4 pt-20 md:pt-28">
-        <h1 className="text-center text-5xl font-extrabold leading-[60px] bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color md:text-6xl md:leading-[85px] lg:text-7xl">
-          Find The Perfect Product That Matches Your Requirements
+      <section className="mx-auto flex max-w-7xl flex-col items-center px-4 pt-14 md:pt-20">
+        <h1 className="text-center text-4xl font-extrabold leading-[50px] bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color sm:text-6xl md:leading-[85px] lg:text-7xl">
+        Finding Products Made Easier
         </h1>
 
         <h2 className="mt-12 flex justify-center space-x-[0.35rem] text-center text-2xl font-medium md:text-3xl text-secondary-dark-color">
-          <p>Finding Products Made Easier</p>{" "}
+          <p>Find The Perfect Product That Matches Your Requirements</p>{" "}
         </h2>
 
-        <p className="mt-12 w-[80%] text-center text-lg capitalize md:text-xl">
+        <p className="mt-12 w-[80%] text-center text-base capitalize md:text-xl">
           Enter your requirements and find the best products that match with
           them within few minutes by few clicks. If you already have a product
           make sure it is the best.
