@@ -10,7 +10,7 @@ const Navbar = () => {
 
     if (session) {
       return (
-        <div className="flex items-center space-x-5">
+        <div className="flex items-center space-x-5 w-full order-3 justify-between mt-5 sm:flex sm:items-center sm:space-x-5 sm:w-auto sm:order-none sm:justify-start sm:mt-0">
           <Link
             href="/products"
             className="text-secondary-color font-semibold hover:text-secondary-dark-color transition duration-300 ease-in-out hover:scale-110"
@@ -29,15 +29,25 @@ const Navbar = () => {
           >
             Guide
           </Link>
-          <button
-            className="bg-secondary-color hover:bg-secondary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs text-primary-color w-20 h-8"
-            onClick={() => signOut()}
-          >
-            Sign Out
-          </button>
         </div>
       );
     }
+  }
+
+  const AuthButton = () => {
+    const { data: session } = useSession();
+
+    if (session) {
+      return (
+        <button
+          className="bg-secondary-color hover:bg-secondary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs text-primary-color w-20 h-8"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </button>
+      );
+    }
+
     return (
       <button
         className="bg-secondary-color hover:bg-secondary-dark-color hover:rotate-6 transition duration-300 ease-in-out md:w-28 md:h-10 md:text-sm rounded-lg text-xs text-primary-color w-20 h-8"
@@ -46,10 +56,10 @@ const Navbar = () => {
         Sign In
       </button>
     );
-  }
+  };
 
   return (
-    <nav className="flex items-center justify-between px-4 py-4 mb-8 border-b font-medium shadow-sm 2xl:px-8">
+    <nav className="flex items-center justify-between px-4 py-4 mb-8 border-b font-medium shadow-sm 2xl:px-8 flex-wrap">
       <Link
         href="/"
         className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-primary-dark-color  transition duration-300 ease-in-out hover:scale-110"
@@ -57,6 +67,7 @@ const Navbar = () => {
         SPOTIT
       </Link>
       <AuthLinks />
+      <AuthButton />
     </nav>
   );
 };
