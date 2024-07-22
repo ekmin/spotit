@@ -29,6 +29,12 @@ const Navbar = () => {
           >
             Guide
           </Link>
+          <Link
+            href="/saved"
+            className="text-secondary-color font-semibold hover:text-secondary-dark-color transition duration-300 ease-in-out hover:scale-110"
+          >
+            Saved
+          </Link>
         </div>
       );
     }
@@ -62,7 +68,7 @@ const Navbar = () => {
     <nav className="flex items-center justify-between px-4 py-4 mb-8 border-b font-medium shadow-sm 2xl:px-8 flex-wrap">
       <Link
         href="/"
-        className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-primary-dark-color  transition duration-300 ease-in-out hover:scale-110"
+        className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color  transition duration-300 ease-in-out hover:scale-110"
       >
         SPOTIT
       </Link>
