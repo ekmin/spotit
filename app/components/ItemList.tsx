@@ -21,7 +21,7 @@ interface itemProps {
 }
 
 const ItemList = ({ items }: itemProps) => {
-  const [saved, setSaved] = useState<boolean>(false)
+  const [saved, setSaved] = useState<boolean[]>([false, false, false, false])
   const { data: session } = useSession();
 
   const saveHandle = async (index: number) => {
@@ -30,12 +30,13 @@ const ItemList = ({ items }: itemProps) => {
         ...items[index],
         userId: session?.user?.id,
       });
-      setSaved(true)
+      let newArr = [...saved];
+      newArr[index] = true;
+      setSaved(newArr);
       console.log("Document written with ID: ", docRef.id);
       showToast("success", "Item saved successfully");
     } catch (e) {
       showToast("error", "An error occured")
-      setSaved(false)
       console.error("Error adding document: ", e);
     }
   };
@@ -78,12 +79,12 @@ const ItemList = ({ items }: itemProps) => {
                     Reference {index + 1}
                   </a>
                 ))}
-                <button
+                {!saved[index] && <button
                   className="absolute bottom-10 right-10 text-3xl text-secondary-dark-color hover:text-secondary-color transition-colors"
                   onClick={() => saveHandle(index)}
                 >
                   <MdBookmark />
-                </button>
+                </button>}
               </div>
             </div>
           </li>
