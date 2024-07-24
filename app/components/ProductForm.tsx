@@ -37,7 +37,7 @@ type Product = {
 const ProductForm = () => {
   const [showForm, setShowForm] = useState({
     show: true,
-    name: "Requirements",
+    name: "collapse",
     icon: <MdNorth />,
   });
   const [requirement, setRequirement] = useState("");
@@ -56,7 +56,7 @@ const ProductForm = () => {
   const onClickShow = () =>
     setShowForm((prevState) => ({
       show: !prevState.show,
-      name: prevState.show ? "Requirements" : "Requirements",
+      name: prevState.show ? "expand" : "collapse",
       icon: prevState.show ? <MdSouth /> : <MdNorth />,
     }));
 
@@ -117,7 +117,7 @@ const ProductForm = () => {
       console.log(response.data);
       setShowForm({
         show: false,
-        name: "Requirements",
+        name: "expand",
         icon: <MdSouth />,
       });
     } catch (error) {
@@ -202,10 +202,10 @@ const ProductForm = () => {
     <div>
       <div className="md:max-w-xl max-w-md mx-auto md:p-0 p-2">
         <button
-          className="w-full md:h-10 md:text-xl text-lg border-b-2 border-white-500 h-8 mb-5 flex justify-between"
+          className="w-full md:h-10 md:text-xl text-lg border-b-2 border-white-500 h-8 mb-5 flex items-center justify-between"
           onClick={onClickShow}
         >
-          {showForm["name"]} {showForm["icon"]}
+          <span>Requirements <span className="text-lg italic">({showForm["name"]})</span></span> {showForm["icon"]}
         </button>
         {/* <Form show={showForm["show"]} />*/}
         <div
@@ -225,7 +225,7 @@ const ProductForm = () => {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
-                  placeholder="Smartphone"
+                  placeholder="Enter the product type"
                   name="productType"
                   value={requirements.productType}
                   onChange={onChange}
@@ -240,7 +240,7 @@ const ProductForm = () => {
                   <input
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-4"
                     type="text"
-                    placeholder="Something"
+                    placeholder="Enter your requirement"
                     name="requirement"
                     value={requirement}
                     onChange={onChangeRequirement}
@@ -273,7 +273,7 @@ const ProductForm = () => {
                 </label>
                 <textarea
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Something"
+                  placeholder="Enter your special requirements if you have any"
                   name="otherCases"
                   value={requirements.otherCases}
                   onChange={onChange}
