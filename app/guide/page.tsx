@@ -63,7 +63,7 @@ const guide = () => {
   }
 
   const [product, setProduct] = useState({
-    product: " ",
+    product: "",
   });
   const [responseData, setResponseData] = useState<contentType>({
     purpose_and_use: {
@@ -120,14 +120,14 @@ const guide = () => {
       const response = await axios.post("/api/guide", product);
       setLoading(false);
       setProduct({
-        product: " ",
+        product: "",
       });
       setResponseData(response.data);
       console.log(response.data);
       showToast("success", "Data retrieved successfuly");
     } catch (error: any) {
       setProduct({
-        product: " ",
+        product: "",
       });
       setLoading(false);
       showToast("error", error.response.statusText);
@@ -240,7 +240,7 @@ const guide = () => {
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
-          placeholder="Smartphone"
+          placeholder="Enter the product type"
           name="product"
           value={product.product}
           onChange={onChange}
