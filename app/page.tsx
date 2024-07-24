@@ -51,7 +51,7 @@ export default function Home() {
           <p>Find The Perfect Product That Matches Your Requirements</p>{" "}
         </h2>
 
-        <p className="mt-12 w-[80%] text-center text-base capitalize md:text-xl">
+        <p className="mt-12 w-[80%] text-center text-base md:text-xl">
           Enter your requirements and find the best products that match with
           them within few minutes by few clicks. If you already have a product
           make sure it is the best.
