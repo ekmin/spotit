@@ -49,66 +49,73 @@ const saved = () => {
     if (error) {
       console.error("Error fetching products: ", error);
       showToast("error", "Error fetching products");
-      return <p>No products to show</p>;
+      return <p>An error occured</p>;
     }
+    console.log(productsSnapshot?.docs.length == 0);
 
     return (
       <div>
         <h1 className="text-3xl font-extrabold text-center mb-10">
           Saved Products
         </h1>
-        <div className="grid grid-cols-3 gap-4 m-4">
-          {productsSnapshot?.docs.map((doc) => (
-            <div
-              key={doc.id}
-              className="relative flex shrink-0 max-w-[95vw] overflow-hidden rounded-3xl bg-gradient-to-b from-secondary-color to-primary-dark-color text-primary-color shadow-md md:text-base text-sm"
-            >
-              <div className="relative w-[768px] p-12 h-100 flex flex-col justify-between items-start">
-                <h1 className="font-bold font-lg mb-4">
-                  {doc.data()["product title"]}:{" "}
-                  <span className="font-light italic">
-                    {doc.data()["special tag"]}
-                  </span>
-                </h1>
-                <p className="font-md mb-4">
-                  {doc.data()["short description"]}
-                </p>
-                <h2 className="font-semibold font-lg mb-2 text-secondary-dark-color">
-                  Key Features
-                </h2>
-                <ol className="list-disc ml-4 text-secondary-dark-color">
+        {productsSnapshot?.docs.length != 0 ? (
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
+            {productsSnapshot?.docs.map((doc) => (
+              <div
+                key={doc.id}
+                className="relative flex shrink-0 max-w-[95vw] overflow-hidden rounded-3xl bg-gradient-to-b from-secondary-color to-primary-dark-color text-primary-color shadow-md md:text-base text-sm"
+              >
+                <div className="relative w-[768px] p-12 h-100 flex flex-col justify-between items-start">
+                  <h1 className="font-bold font-lg mb-4">
+                    {doc.data()["product title"]}:{" "}
+                    <span className="font-light italic">
+                      {doc.data()["special tag"]}
+                    </span>
+                  </h1>
+                  <p className="font-md mb-4">
+                    {doc.data()["short description"]}
+                  </p>
+                  <h2 className="font-semibold font-lg mb-2 text-secondary-dark-color">
+                    Key Features
+                  </h2>
+                  <ol className="list-disc ml-4 text-secondary-dark-color">
+                    {doc
+                      .data()
+                      ["key features"].map((feature: string, index: number) => (
+                        <li className="font-md" key={index}>
+                          {feature}
+                        </li>
+                      ))}
+                  </ol>
+                  <h2 className="mt-4 mb-4 font-bold text-secondary-dark-color">
+                    {doc.data()["price"]}
+                  </h2>
                   {doc
                     .data()
-                    ["key features"].map((feature: string, index: number) => (
-                      <li className="font-md" key={index}>
-                        {feature}
-                      </li>
+                    ["resource links"].map((link: string, index: number) => (
+                      <a
+                        className="underline text-secondary-color"
+                        key={index}
+                        href={link}
+                      >
+                        Reference {index + 1}
+                      </a>
                     ))}
-                </ol>
-                <h2 className="mt-4 mb-4 font-bold text-secondary-dark-color">
-                  {doc.data()["price"]}
-                </h2>
-                {doc
-                  .data()
-                  ["resource links"].map((link: string, index: number) => (
-                    <a
-                      className="underline text-secondary-color"
-                      key={index}
-                      href={link}
-                    >
-                      Reference {index + 1}
-                    </a>
-                  ))}
-                <button
-                  className="absolute bottom-10 right-10 text-3xl text-secondary-dark-color hover:text-secondary-color transition-colors"
-                  onClick={() => removeHandle(doc.id)}
-                >
-                  <MdCancel />
-                </button>
+                  <button
+                    className="absolute bottom-10 right-10 text-3xl text-secondary-dark-color hover:text-secondary-color transition-colors"
+                    onClick={() => removeHandle(doc.id)}
+                  >
+                    <MdCancel />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <h2 className="text-lg font-semibold text-center">
+            You haven't saved any product :)
+          </h2>
+        )}
       </div>
     );
   }
