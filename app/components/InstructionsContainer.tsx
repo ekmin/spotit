@@ -26,7 +26,7 @@ const removeAsterisks = (text: string) => text.replace(/\*\*/g, '');
 
 const InstructionsContainer = ({ content }: contentProps) => {
   return (
-    <div className="max-w-6xl mx-auto my-10 p-8 shadow-lg rounded-xl">
+    <div className="max-w-6xl mx-auto my-10 p-8 shadow-lg rounded-xl bg-gradient-to-b from-primary-dark-color to-primary-color">
       {Object.keys(content).map((key) => {
         const section = content[key as keyof contentType];
         return (
