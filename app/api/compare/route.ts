@@ -26,7 +26,3 @@ export async function POST(req: NextRequest) {
   }
   return NextResponse.json("Not Logged in");
 }
-
-// [last local best] - const prompt = `Answer the following prompt in this JSON format.[description, {special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Give below is a product selected by the user and you have to provide a product description along with your opinion about the users choice and suggest 4 other products which are better than that in the same price range. In the short description you should say why it is better than the product choosed by user and show the difference. Product: ${body["product"]}`;
-// In the short description you should say why it is better than the product choosed by user and show the dfifference.
-// [last best commited] - Answer the following prompt in this JSON format.[your opinion, {special tag, product title, array of key features, short description, price, resource links}, {special tag, product title, array of key features, short description, price, resource links}]. Give below is a product selected by the user and you have to give your opinion about the users choice and suggest 4 other products which are better than that in the same price range. In the short description you should say why it is better than the product choosed by user and show the difference. Product: ${body["product"]}
