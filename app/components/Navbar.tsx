@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
@@ -68,9 +69,19 @@ const Navbar = () => {
     <nav className="flex items-center justify-between px-4 py-4 mb-8 border-b font-medium shadow-sm 2xl:px-8 flex-wrap">
       <Link
         href="/"
-        className="md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color  transition duration-300 ease-in-out hover:scale-110"
       >
+        <div className="flex gap-3 items-center md:text-3xl text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-b from-secondary-dark-color to-secondary-color  transition duration-300 ease-in-out hover:scale-110">
+        <Image
+          src="/logo.png"
+          alt="Logo"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: "40px", height: "auto" }}
+          priority
+        />
         SPOTIT
+        </div>
       </Link>
       <AuthLinks />
       <AuthButton />
