@@ -9,11 +9,6 @@ import InstructionsContainer from "../components/InstructionsContainer";
 import { showToast } from "../components/ToastHelper";
 import CircleSpinner from "../components/CircleSpinner";
 
-type Example = {
-  description: string;
-  examples: string[];
-};
-
 type contentType = {
   purpose_and_use: {
     description: "";
@@ -123,7 +118,6 @@ const guide = () => {
         product: "",
       });
       setResponseData(response.data);
-      console.log(response.data);
       showToast("success", "Data retrieved successfuly");
     } catch (error: any) {
       setProduct({

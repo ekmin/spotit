@@ -9,15 +9,6 @@ import Spinner from "../components/Spinner";
 import { showToast } from "../components/ToastHelper";
 import CompareItemList from "../components/CompareItemList";
 
-type Product = {
-  "special tag": string;
-  "product title": string;
-  "key features": string[];
-  "short description": string;
-  price: string;
-  "resource links": string[];
-};
-
 const compare = () => {
   const { data: session } = useSession();
   if (!session) {
@@ -39,10 +30,10 @@ const compare = () => {
     e.preventDefault();
 
     try {
+      setResponseData([]);
       setLoading(true);
       const response = await axios.post("/api/compare", product);
       setLoading(false);
-      console.log(response.data);
       setProduct({
         productType: "",
         model: ""
@@ -105,7 +96,7 @@ const compare = () => {
       <h1 className="text-3xl font-extrabold tracking-tight text-center capitalize mt-10">
         General Opinion
       </h1>
-      <p className="mb-4 text-center max-w-xl m-auto mt-10 border-2 border-secondary-color px-8 py-8 rounded-md">{responseData[0]}</p>
+      <p className="mb-4 text-center max-w-xl m-auto mt-10 border-2 border-secondary-color px-8 py-8 rounded-md">{loading ? "Loading..." : responseData[0]}</p>
       <h1 className="text-3xl font-extrabold tracking-tight text-center capitalize mt-10">
         Products
       </h1>

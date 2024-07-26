@@ -51,7 +51,6 @@ const saved = () => {
       showToast("error", "Error fetching products");
       return <p>An error occured</p>;
     }
-    console.log(productsSnapshot?.docs.length == 0);
 
     return (
       <div>
@@ -97,6 +96,7 @@ const saved = () => {
                         className="underline text-secondary-color"
                         key={index}
                         href={link}
+                        target="_blank"
                       >
                         Reference {index + 1}
                       </a>

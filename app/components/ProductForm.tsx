@@ -30,7 +30,7 @@ type Product = {
   "product title": string;
   "key features": string[];
   "short description": string;
-  price: string;
+  "price": string;
   "resource links": string[];
 };
 
@@ -75,7 +75,7 @@ const ProductForm = () => {
 
     if (requirement == " ") {
       showToast("warning", "Enter your requirement");
-      return null
+      return null;
     }
 
     setRequirementsArray((prev) => {
@@ -104,25 +104,32 @@ const ProductForm = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(requirementsArray.length == 0) {
+    if (requirementsArray.length == 0) {
       showToast("error", "Enter your requirements");
     }
 
     try {
-      console.log(requirements);
-      setLoading(true)
+      setResponseData([]);
+      setLoading(true);
       const response = await axios.post("/api/products", requirements);
-      setLoading(false)
+      setLoading(false);
       setResponseData(response.data);
-      console.log(response.data);
+      showToast("success", "Data retrieved successfuly");
+      setRequirements({
+        productType: "",
+        requirements: [],
+        otherCases: "",
+        currency: "",
+      });
+      setRequirementsArray([])
       setShowForm({
         show: false,
         name: "expand",
         icon: <MdSouth />,
       });
-    } catch (error) {
-      console.error("Error submitting form", error);
-      setLoading(false)
+    } catch (error: any) {
+      setLoading(false);
+      showToast("error", error.response.statusText + ", Try again");
     }
   };
 
@@ -133,7 +140,11 @@ const ProductForm = () => {
           className="w-full md:h-10 md:text-xl text-lg border-b-2 border-white-500 h-8 mb-5 flex items-center justify-between"
           onClick={onClickShow}
         >
-          <span>Requirements <span className="text-lg italic">({showForm["name"]})</span></span> {showForm["icon"]}
+          <span>
+            Requirements{" "}
+            <span className="text-lg italic">({showForm["name"]})</span>
+          </span>{" "}
+          {showForm["icon"]}
         </button>
         <div
           className={`${
@@ -207,9 +218,7 @@ const ProductForm = () => {
                 />
               </div>
               <div className="mb-8">
-                <label className="block text-sm font-bold mb-2">
-                  Currency
-                </label>
+                <label className="block text-sm font-bold mb-2">Currency</label>
                 <select
                   name="currency"
                   value={requirements.currency}

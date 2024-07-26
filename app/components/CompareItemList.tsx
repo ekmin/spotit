@@ -63,6 +63,7 @@ const CompareItemList = ({ items }: itemProps) => {
                     className="underline text-secondary-color"
                     key={index}
                     href={link}
+                    target="_blank"
                   >
                     Reference {index + 1}
                   </a>
