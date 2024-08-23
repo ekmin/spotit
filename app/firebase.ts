@@ -2,12 +2,12 @@ import { getFirestore } from "firebase/firestore";
 import { getApps, getApp, initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCw95ArPck0J8wih1gbIDqjmgqGiZk9n7k",
-  authDomain: "spotit-aedbf.firebaseapp.com",
-  projectId: "spotit-aedbf",
-  storageBucket: "spotit-aedbf.appspot.com",
-  messagingSenderId: "929045693867",
-  appId: "1:929045693867:web:fc58808c3be392d8613eee"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
